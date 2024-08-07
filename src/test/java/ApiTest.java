@@ -1,13 +1,10 @@
 import io.qameta.allure.testng.AllureTestNg;
-import org.junit.Test;
 import org.testng.annotations.Listeners;
-
-import javax.annotation.processing.SupportedAnnotationTypes;
+import org.testng.annotations.Test;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
-
 @Listeners({AllureTestNg.class})
-public class ApiTest {
+public class ApiTest  {
     @Test
 
     public void getListOfUsers(){
@@ -55,25 +52,27 @@ public class ApiTest {
                 .body(not(emptyString()))
                 .body("per_page", equalTo(6));
     }
-//    @Test
-//        public void postCreateUser(){
-//
-//        CreateUserBody body1 = new CreateUserBody ("Olena", "HR BP");
-//
-//        given()
-//                .baseUri("https://reqres.in/api")
-//                .body(body1)
-//                .contentType("application/json")
-//                .log().all()
-//                .when()
-//                .post("/users")
-//                .then()
-//                .log().all()
-//                .statusCode(201)
-//                .body(not(emptyString()))
-//                .body("name", equalTo("Olena"))
-//                .body("job", equalTo("HR BP"));
-//    }
+    @Test
+    void postCreateUser(){
+        String body = "{\n" +
+                "    \"name\": \"morpheus\",\n" +
+                "    \"job\": \"leader\"\n" +
+                "}";
+        given()
+                .baseUri("https://reqres.in/api")
+                .body(body)
+                .contentType("application/json")
+                .log().all()
+                .when()
+                .post("/users")
+                .then()
+                .log().all()
+                .statusCode(201)
+                .body(not(emptyString()))
+                .body("name", equalTo("morpheus"))
+                .body("job", equalTo("leader"));
+
+    }
 @Test
     public void deleteUser(){
         given()
